@@ -1,6 +1,7 @@
 class morse
 {
 	; --- Static Variables ---
+	static dict := {}
 
 	static lettersDict := {".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E"
 					, "..-.": "F", "--.": "G", "....": "H", "..": "I", ".---": "J"
@@ -18,24 +19,35 @@ class morse
 	, "..-..": "É"		; E with acute accent
 	, "--.--": "Ñ"		; N with tilde
 	, "---.": "Ö"		; O with diaeresis
-	, "..--": "Ü"		; U with diaeresis
-	, "--..--": ","		; comma
+	, "..--": "Ü"}		; U with diaeresis
+
+	static punctuationDict := {"--..--": ","	; comma
 	, ".-.-.-": "."		; period
 	, "..--..": "?"		; question mark
 	, "-.-.-": ";"		; semicolon
 	, "---...": ":"		; colon
 	, "-..-.": "/"		; slash
-	; , "-....-": "-"	; dash
+	, "-....-": "-"		; dash
 	, ".----.": """"	; apostrophe
 	, "-.--.-": "()"	; parenthesis
 	, "..--.-": "_"		; underline
-	, ".--.-.": "@"		; at symbol from http://www.learnmorsecode.com/
-	, ".......": "\ "}	; space
-
-	static punctuationDict := {".......": "` ", "---...": "\:", "--..--": "\,"}
-
-	static extraDict := {".-.-.-": "\."}
+	, ".--.-.": "@"		; at symbol
+	, ".......": " "}	; space
 	
+	__New() {
+		for key, value in this.lettersDict {
+			this.dict[key] := value
+		}
+		for key, value in this.numbersDict {
+			this.dict[key] := value
+		}
+		for key, value in this.nonEnglishDict {
+			this.dict[key] := value
+		}
+		for key, value in this.punctuationDict {
+			this.dict[key] := value
+		}
+	}
 	; --- Static Methods ---
 
 	encode(param_value) {
@@ -46,23 +58,17 @@ class morse
 			}
 			return outputArr
 		}
-		; replace dashes
-		param_value := regexReplace(param_value, "(\-)", "")
-		for code, character in this.extraDict {
-			param_value := regexReplace(param_value, "i)" character, code "//")
+		
+		valueArray := strSplit(param_value)
+		outputStr := ""
+		for _, value in valueArray {
+			index := this._indexOf(this.dict, value)
+			if (index != -1) {
+				outputStr .= index " "
+			}
 		}
-		for code, character in this.lettersDict {
-			param_value := regexReplace(param_value, "i)" character, code "//")
-		}
-		for code, character in this.numbersDict {
-			param_value := regexReplace(param_value, "i)" character, code "//")
-		}
-		for code, character in this.punctuationDict {
-			param_value := regexReplace(param_value, "i)" character, code "//")
-		}
-		param_value := strReplace(param_value, "//", " ")
 		; trim last character as " " is always exists on end
-		return subStr(param_value, 1, strLen(param_value) - 1)
+		return subStr(outputStr, 1, strLen(outputStr) - 1)
 	}
 
 
@@ -77,12 +83,18 @@ class morse
 		string := ""
 		example := strSplit(param_value, " ")
 		for _, code in strSplit(param_value, " ") {
-			string .= this.lettersDict[code]
-			string .= this.numbersDict[code]
-			string .= this.punctuationDict[code]
-			string .= this.nonEnglishDict[code]
-			string .= this.extrasDict[code]
+			string .= this.dict[code]
 		}
 		return string
+	}
+
+	_indexOf(param_array, param_search) {
+		param_search := format("{:U}", param_search)
+		for key, value in param_array {
+			if (value == param_search) {
+				return key
+			}
+		}
+		return -1
 	}
 }
