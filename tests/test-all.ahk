@@ -8,7 +8,7 @@
 #SingleInstance, force
 SetBatchLines, -1
 
-; morseObj := new morse()
+morse := new morse()
 assert := new unittesting()
 
 assert.group("encode")
@@ -21,11 +21,20 @@ assert.test(morse.encode("hello, world."), ".... . .-.. .-.. --- --..-- ....... 
 assert.label("array")
 assert.test(morse.encode(["hello", "world"]), [".... . .-.. .-.. ---", ".-- --- .-. .-.. -.."])
 
+assert.label("unhandled character")
+assert.test(morse.encode("#"), "")
+
+
+
 assert.group("decode")
+assert.label("string")
+assert.test(morse.decode(".... . .-.. .-.. --- ....... .-- --- .-. .-.. -.."), "HELLO WORLD")
+
 assert.label("array")
 assert.test(morse.decode([".... . .-.. .-.. ---", ".-- --- .-. .-.. -.."]), ["HELLO", "WORLD"])
 
-
+assert.label("non-English")
+assert.test(morse.decode(".-.- .-.- .-.-"), "ÄÄÄ")
 assert.fullreport()
 
 ExitApp

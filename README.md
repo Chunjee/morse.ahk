@@ -13,6 +13,7 @@ In your code only export.ahk needs to be included:
 #Include %A_ScriptDir%\node_modules
 #Include morse.ahk\export.ahk
 
+morse := new morse()
 result := morse.decode("..-. --- --- ....... -... .- .-.")
 ; => "foo bar"
 ```
@@ -20,7 +21,7 @@ result := morse.decode("..-. --- --- ....... -... .- .-.")
 
 ## API
 
-### morse.encode(value, [separator])
+### .encode(value)
 
 Encodes and returns a given string or array
 
@@ -34,7 +35,7 @@ encoded := morse.encode(["hello", "world"])
 ````
 
 
-### morse.decode(value, [separator])
+### .decode(value)
 
 Decodes and returns a string or array
 
