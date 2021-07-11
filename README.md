@@ -17,7 +17,7 @@ morse := new morse()
 result := morse.decode("..-. --- --- ....... -... .- .-.")
 ; => "foo bar"
 ```
-
+You may also review or copy the library from [./export.ahk on GitHub](https://raw.githubusercontent.com/chunjee/morse.ahk/master/export.ahk); #Incude as you would normally when manually downloading.
 
 ## API
 
