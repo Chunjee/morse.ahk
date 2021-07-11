@@ -1,10 +1,10 @@
-#morse
+# morse.ahk
 
 A simple Morse code library for AutoHotkey
 
 ## Installation
 
-In a terminal or command line:
+In a terminal or command line navigated to your project folder:
 ```bash
 npm install morse.ahk
 ```
