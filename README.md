@@ -25,27 +25,27 @@ You may also review or copy the library from [./export.ahk on GitHub](https://ra
 
 Encodes and returns a given string or array
 
-````autohotkey
+```autohotkey
 encoded := morse.encode("Hello, world.")
 ; => ".... . .-.. .-.. --- --..-- ....... .-- --- .-. .-.. -.. .-.-.-"
 
 encoded := morse.encode(["hello", "world"])
 ; => [".... . .-.. .-.. ---", ".-- --- .-. .-.. -.."]
 
-````
+```
 
 
 ### .decode(value)
 
 Decodes and returns a string or array
 
-````autohotkey
+```autohotkey
 morse.decode(".... . .-.. .-.. --- --..-- ....... .-- --- .-. .-.. -.. .-.-.-");
 ; => HELLO, WORLD.
 
 morse.decode([".... . .-.. .-.. ---", ".-- --- .-. .-.. -.."]);
 ; => [ "HELLO", "WORLD" ]
-````
+```
 
 
 ## attributes
